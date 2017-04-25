@@ -1,0 +1,29 @@
+{
+  "name": "radiokit-toolkit-broadcast-metadata",
+  "version": "1.0.0",
+  "description": "RadioKit Toolkit for retreiving metadata of channels broadcasted from RadioKit systems",
+  "main": "lib/index.js",
+  "scripts": {
+    "browser": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:radiokit/toolkit-js-broadcast-metadata.git"
+  },
+  "contributors": [
+    "Marcin Lewandowski <marcin@radiokit.org>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "gulp": "^3.9.1",
+    "gulp-typedoc": "^2.0.2",
+    "ts-loader": "^2.0.0",
+    "typedoc": "^0.5.10",
+    "typescript": "^2.0.6",
+    "webpack": "^1.13.3"
+  },
+  "dependencies": {
+    "phoenix": "^1.2.1"
+  }
+}
