@@ -60,7 +60,7 @@ The repository contains some simple demo in the `demo/` subdirectory.
 
 ## Documentation
 
-Documentation is located in the `doc/` subdirectory.
+Documentation is located in the `docs/` subdirectory.
 
 It can be rebuilt by running `gulp typedoc` after cloning the repository.
 
