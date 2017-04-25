@@ -8,94 +8,57 @@
 
   <script>
   function init() {
-    // window.player = new RadioKitToolkitPlayback.Channel.Player("fd9a7d1c-a387-40a0-b876-2799668d6f9d", "123");
-    // window.player.on('track-playback-started', function(track) {
-    //   document.getElementById('track-id').innerHTML = 'TRACK ID: ' + track.getId();
+    window.listener = new window.RadioKit.Toolkit.Broadcast.Metadata.MetadataListener("ABC", "fd9a7d1c-a387-40a0-b876-2799668d6f9d");
 
-    //   track.getInfoAsync()
-    //     .then(function(trackInfo) {
+    window.listener.setPositionInterval(250);
 
-    //       // Name
-    //       document.getElementById('track-name').innerHTML = 'NAME: ' + trackInfo.getName();
+    window.listener.setUpdateCallback(function(metadata) { 
+      document.getElementById('track-metadata').innerHTML = JSON.stringify(metadata);
+    });
 
-    //       // Metadata
-    //       var metadataInfo = trackInfo.getMetadata();
-    //       var metadataText = 'METADATA:<ul>';
-    //       metadataKeys = Object.keys(metadataInfo);
-    //       for(var i = 0; i < metadataKeys.length; i++) {
-    //         metadataText += '<li><b>' + metadataKeys[i] + '</b>: ' + metadataInfo[metadataKeys[i]] + '</li>';
-    //       }
-    //       metadataText += '</ul>';
-
-    //       document.getElementById('track-metadata').innerHTML = metadataText;
-    //     })
-    //     .catch(function(reason) {
-    //       throw reason;
-    //     });
-    // });
-
-    // window.player.on('channel-metadata-update', function(payload) {
-    //   // Metadata
-    //   var metadataInfo = payload.metadata;
-    //   var metadataText = 'METADATA:<ul>';
-    //   metadataKeys = Object.keys(metadataInfo);
-    //   for(var i = 0; i < metadataKeys.length; i++) {
-    //     metadataText += '<li><b>' + metadataKeys[i] + '</b>: ' + metadataInfo[metadataKeys[i]] + '</li>';
-    //   }
-    //   metadataText += '</ul>';
-
-    //   document.getElementById('track-metadata').innerHTML = metadataText;
-    // });
-
-    // window.player.on('track-position', function(track, position, duration) {
-    //   document.getElementById('track-position').innerHTML = 'POSITION: ' + position + ' / ' + duration + ' ms';
-    // });
-
-    // window.player.on('playlist-fetched', function(playlist) {
-    //   var tracks = Object.keys(playlist.getTracks());
-    //   var tracksHTML = "<div>PLAY LIST:</div><br />";
-    //   for (var i = 0; i < tracks.length; i++) {
-    //     tracksHTML += "<div>" + tracks[i] + "</div>";
-    //   }
-    //   document.getElementById('playlist').innerHTML = tracksHTML;
-    // });
+    window.listener.setPositionCallback(function(position, duration) { 
+      document.getElementById('track-position').innerHTML = position + ' / ' + duration;
+    });
   }
 
 
   function toggle() {
     var button = document.getElementById('button');
+    if(window.listener.getState() === 1) { // stopped
+      button.innerHTML = "STARTING";
+      window.listener.start()
+        .then(function(listener) {
+          button.innerHTML = "STOP";
+        })
+        .catch(function(reason) {
+          alert('Error: ' + reason);
+        });
 
-    if(window.player.isStarted()) {
-      button.innerHTML = "PLAY";
-      window.player.stop();
-    } else {
-      button.innerHTML = "STOP";
-      window.player.start();
+    } else if(window.listener.getState() === 4) { // started
+      button.innerHTML = "STOPPING";
+      window.listener.stop()
+        .then(function(listener) {
+          button.innerHTML = "PLAY";
+        })
+        .catch(function(reason) {
+          alert('Error: ' + reason);
+        });
     }
   }
 
   function fetchPlaylist() {
-    window.player.fetchPlaylist();
+    window.listener.fetchPlaylist();
   }
 
 
   function setVolume(volume) {
-    window.player.setVolume(volume);
+    window.listener.setVolume(volume);
   }
   </script>
 </head>
 
 <body onload="init()" style="text-align: center">
-  <button onclick="toggle()" id="button" style="width: 400px; height: 200px; font-size: 24pt">PLAY</button>
-
-  <br /><br />
-  <button onclick="fetchPlaylist()" style="width: 97px; height: 50px; font-size: 11pt">FETCH PLAYLIST</button>
-
-  <br /><br />
-  <button onclick="setVolume(0.25)" style="width: 97px; height: 50px; font-size: 11pt">VOL 25%</button>
-  <button onclick="setVolume(0.50)" style="width: 97px; height: 50px; font-size: 11pt">VOL 50%</button>
-  <button onclick="setVolume(0.75)" style="width: 97px; height: 50px; font-size: 11pt">VOL 75%</button>
-  <button onclick="setVolume(1.0)" style="width: 97px; height: 50px; font-size: 11pt">VOL 100%</button>
+  <button onclick="toggle()" id="button" style="width: 400px; height: 200px; font-size: 24pt">START</button>
 
   <br><br>
 
@@ -107,15 +70,9 @@
 
   <br>
 
-  <div id="track-name" style="width: 400px; text-align: center; margin: 0 auto"></div>
-
-  <br>
-
   <div id="track-metadata" style="width: 400px; text-align: left; margin: 0 auto"></div>
 
   <br>
-
-  <div id="playlist" style="width: 400px; text-align: left; margin: 0 auto"></div>
 
 </body>
 </html>
