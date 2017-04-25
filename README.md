@@ -2,7 +2,14 @@
 
 High-level JavaScript API for querying metadata of [RadioKit](http://www.radiokit.org)-powered channels.
 
-# Example
+# Usage
+
+## Compatibility
+
+* For IE9 and older compatibility use any Promise polyfill.
+* For IE8 compatibility use [ES5-shim](https://github.com/es-shims/es5-shim).
+
+## Code Example
 
 In the web browser:
 
@@ -42,18 +49,31 @@ metadataListener.start()
     .catch((reason) => console.warn("Failed", reason));
 ```
 
+## Demo
+
+The repository contains some simple demo in the `demo/` subdirectory.
+
+* Clone the repository
+* Enter `demo/` subdirectory.
+* Run simple webserver from it, e.g.: `python -m SimpleHTTPServer`
+* Open http://localhost:8000/ in your web browser.
+
+## Documentation
+
+Documentation is located in the `doc/` subdirectory.
+
+It can be rebuilt by running `gulp typedoc` after cloning the repository.
+
 # Development
+
+## Preparing environment
 
 * Clone the repo
 * Enter dir with the project
-* Install NPM packages: `npm install` (you can use also `yarn install`)
-
-# Compatibility
-
-* For IE9 and older compatibility use any Promise polyfill.
-* For IE8 compatibility use [ES5-shim](https://github.com/es-shims/es5-shim).
-
-# Building browser bundle
+* Install NPM packages: `npm install` (you can use also `yarn install`) 
+* Install TypeScript interpreter
+ 
+## Building browser bundle
 
 * Type `npm run browser`
 
