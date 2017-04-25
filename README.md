@@ -51,6 +51,8 @@ metadataListener.start()
 
 ## Demo
 
+[See demo](https://radiokit.github.io/toolkit-js-broadcast-metadata/demo/)
+
 The repository contains some simple demo in the `demo/` subdirectory.
 
 * Clone the repository
@@ -59,6 +61,8 @@ The repository contains some simple demo in the `demo/` subdirectory.
 * Open http://localhost:8000/ in your web browser.
 
 ## Documentation
+
+[See docs](https://radiokit.github.io/toolkit-js-broadcast-metadata/docs/)
 
 Documentation is located in the `docs/` subdirectory.
 
