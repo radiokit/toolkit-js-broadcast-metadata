@@ -916,7 +916,13 @@ img { max-width: 100%; }
 		<div class="tsd-panel tsd-typography">
 			<h1 id="radiokit-js-toolkit-broadcast-metadata">RadioKit JS Toolkit: Broadcast Metadata</h1>
 			<p>High-level JavaScript API for querying metadata of <a href="http://www.radiokit.org">RadioKit</a>-powered channels.</p>
-			<h1 id="example">Example</h1>
+			<h1 id="usage">Usage</h1>
+			<h2 id="compatibility">Compatibility</h2>
+			<ul>
+				<li>For IE9 and older compatibility use any Promise polyfill.</li>
+				<li>For IE8 compatibility use <a href="https://github.com/es-shims/es5-shim">ES5-shim</a>.</li>
+			</ul>
+			<h2 id="code-example">Code Example</h2>
 			<p>In the web browser:</p>
 			<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> metadataListener = <span class="hljs-keyword">new</span> <span class="hljs-built_in">window</span>.RadioKit.Toolkit.Broadcast.Metadata.MetadataListener(<span class="hljs-string">"your_access_token"</span>, <span class="hljs-string">"fd9a7d1c-a387-40a0-b876-2799668d6f9d"</span>);
 
@@ -929,44 +935,54 @@ metadataListener.setPositionCallback(<span class="hljs-function"><span class="hl
 });
 
 metadataListener.start()
-    .then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Started"</span>))
-    .catch(<span class="hljs-function">(<span class="hljs-params">reason</span>) =&gt;</span> <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"Failed"</span>, reason));
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ 
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Started"</span>);
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">reason</span>) </span>{
+         <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"Failed"</span>, reason);
+    });
 </code></pre>
 			<p>In the Node.JS:</p>
 			<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { MetadataListener } <span class="hljs-keyword">from</span> <span class="hljs-string">'radiokit-toolkit-metadata-broadcast'</span>;
 
-<span class="hljs-keyword">var</span> metadataListener = <span class="hljs-keyword">new</span> MetadataListener(<span class="hljs-string">"your_access_token"</span>, <span class="hljs-string">"fd9a7d1c-a387-40a0-b876-2799668d6f9d"</span>);
+<span class="hljs-keyword">const</span> metadataListener = <span class="hljs-keyword">new</span> MetadataListener(<span class="hljs-string">"your_access_token"</span>, <span class="hljs-string">"fd9a7d1c-a387-40a0-b876-2799668d6f9d"</span>);
 
-metadataListener.setUpdateCallback(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">metadata</span>) </span>{ 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Metadata: "</span>, metadata); 
-});
+metadataListener.setUpdateCallback(<span class="hljs-function">(<span class="hljs-params">metadata</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Metadata: "</span>, metadata));
 
-metadataListener.setPositionCallback(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">position, duration</span>) </span>{ 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Position: "</span>, position, <span class="hljs-string">"Duration: "</span>, duration); 
-});
+metadataListener.setPositionCallback(<span class="hljs-function">(<span class="hljs-params">position, duration</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Position: "</span>, position, <span class="hljs-string">"Duration: "</span>, duration));
 
 metadataListener.start()
     .then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Started"</span>))
     .catch(<span class="hljs-function">(<span class="hljs-params">reason</span>) =&gt;</span> <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"Failed"</span>, reason));
 </code></pre>
+			<h2 id="demo">Demo</h2>
+			<p><a href="https://radiokit.github.io/toolkit-js-broadcast-metadata/demo/">See demo</a></p>
+			<p>The repository contains some simple demo in the <code>demo/</code> subdirectory.</p>
+			<ul>
+				<li>Clone the repository</li>
+				<li>Enter <code>demo/</code> subdirectory.</li>
+				<li>Run simple webserver from it, e.g.: <code>python -m SimpleHTTPServer</code></li>
+				<li>Open <a href="http://localhost:8000/">http://localhost:8000/</a> in your web browser.</li>
+			</ul>
+			<h2 id="documentation">Documentation</h2>
+			<p><a href="https://radiokit.github.io/toolkit-js-broadcast-metadata/docs/">See docs</a></p>
+			<p>Documentation is located in the <code>docs/</code> subdirectory.</p>
+			<p>It can be rebuilt by running <code>gulp typedoc</code> after cloning the repository.</p>
 			<h1 id="development">Development</h1>
+			<h2 id="preparing-environment">Preparing environment</h2>
 			<ul>
 				<li>Clone the repo</li>
 				<li>Enter dir with the project</li>
-				<li>Install NPM packages: <code>npm install</code> (you can use also <code>yarn install</code>)</li>
+				<li>Install NPM packages: <code>npm install</code> (you can use also <code>yarn install</code>) </li>
+				<li>Install TypeScript interpreter</li>
 			</ul>
-			<h1 id="compatibility">Compatibility</h1>
-			<ul>
-				<li>For IE9 and older compatibility use any Promise polyfill.</li>
-				<li>For IE8 compatibility use <a href="https://github.com/es-shims/es5-shim">ES5-shim</a>.</li>
-			</ul>
-			<h1 id="building-browser-bundle">Building browser bundle</h1>
+			<h2 id="building-browser-bundle">Building browser bundle</h2>
 			<ul>
 				<li>Type <code>npm run browser</code></li>
 			</ul>
 			<p>Browser-compatible version will be located in <code>dist/browser/</code>.</p>
 			<h1 id="authors">Authors</h1>
-			<p>Marcin Lewandowski <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#109;&#x61;&#x72;&#99;&#x69;&#x6e;&#64;&#x72;&#97;&#x64;&#105;&#x6f;&#107;&#x69;&#x74;&#46;&#x6f;&#114;&#x67;">&#109;&#x61;&#x72;&#99;&#x69;&#x6e;&#64;&#x72;&#97;&#x64;&#105;&#x6f;&#107;&#x69;&#x74;&#46;&#x6f;&#114;&#x67;</a></p>
+			<p>Marcin Lewandowski <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#109;&#97;&#114;&#x63;&#105;&#110;&#x40;&#x72;&#97;&#x64;&#x69;&#111;&#x6b;&#x69;&#116;&#46;&#x6f;&#114;&#103;">&#109;&#97;&#114;&#x63;&#105;&#110;&#x40;&#x72;&#97;&#x64;&#x69;&#111;&#x6b;&#x69;&#116;&#46;&#x6f;&#114;&#103;</a></p>
 			<h1 id="license">License</h1>
 			<p>MIT</p>
 		</div>
