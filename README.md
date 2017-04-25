@@ -25,8 +25,12 @@ metadataListener.setPositionCallback(function(position, duration) {
 });
 
 metadataListener.start()
-    .then(() => console.log("Started"))
-    .catch((reason) => console.warn("Failed", reason));
+    .then(function() { 
+        console.log("Started");
+    })
+    .catch(function(reason) {
+         console.warn("Failed", reason);
+    });
 ```
 
 In the Node.JS:
@@ -34,15 +38,11 @@ In the Node.JS:
 ```javascript
 import { MetadataListener } from 'radiokit-toolkit-metadata-broadcast';
 
-var metadataListener = new MetadataListener("your_access_token", "fd9a7d1c-a387-40a0-b876-2799668d6f9d");
+const metadataListener = new MetadataListener("your_access_token", "fd9a7d1c-a387-40a0-b876-2799668d6f9d");
 
-metadataListener.setUpdateCallback(function(metadata) { 
-    console.log("Metadata: ", metadata); 
-});
+metadataListener.setUpdateCallback((metadata) => console.log("Metadata: ", metadata));
 
-metadataListener.setPositionCallback(function(position, duration) { 
-    console.log("Position: ", position, "Duration: ", duration); 
-});
+metadataListener.setPositionCallback((position, duration) => console.log("Position: ", position, "Duration: ", duration));
 
 metadataListener.start()
     .then(() => console.log("Started"))
